@@ -1,0 +1,21 @@
+version: '3.8'
+
+services:
+  bill-extraction-api:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      # Standard OpenAI
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - OPENAI_MODEL=${OPENAI_MODEL:-gpt-4-vision-preview}
+      # Azure OpenAI (set USE_AZURE_OPENAI=true to use)
+      - USE_AZURE_OPENAI=${USE_AZURE_OPENAI:-false}
+      - AZURE_OPENAI_ENDPOINT=${AZURE_OPENAI_ENDPOINT}
+      - AZURE_OPENAI_API_KEY=${AZURE_OPENAI_API_KEY}
+      - AZURE_OPENAI_DEPLOYMENT_NAME=${AZURE_OPENAI_DEPLOYMENT_NAME}
+      - AZURE_OPENAI_API_VERSION=${AZURE_OPENAI_API_VERSION:-2024-02-15-preview}
+    volumes:
+      - .:/app
+    restart: unless-stopped
+
